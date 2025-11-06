@@ -1,8 +1,8 @@
 import { Tabs } from 'expo-router';
 import { YStack } from 'tamagui';
 
-import BottomBar from '../../common/bottomBar';
-import TopBar from '../../common/topBar';
+import BottomBar from '../common/bottomBar';
+import TopBar from '../common/topBar';
 
 import * as Notifications from 'expo-notifications';
 import { useEffect } from 'react';
