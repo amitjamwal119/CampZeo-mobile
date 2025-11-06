@@ -1,153 +1,173 @@
-// TableShell.jsx
-import React, { useState } from "react";
+import { Edit3, Plus, Printer, Trash2 } from "@tamagui/lucide-icons";
+import { useRouter } from "expo-router";
+import React from "react";
 import { TouchableOpacity } from "react-native";
 import { YStack, XStack, ScrollView, Button, Input, Text } from "tamagui";
-// Replace Icon placeholders with your icon library (lucide-react, react-native-vector-icons, etc.)
-const Icon = ({ name, size = 16 }) => <Text>{name}</Text>;
 
-export default function TableShell({
-  headings,
-  rows,
-  page = 1,
-  pageSize = 10,
-  total = null,
-  onSearch = () => {},
-  onAdd = () => {},
-  onCreatePost = () => {},
-  onDelete = () => {},
-  onPageChange = () => {},
-}) {
-  const [query, setQuery] = useState("");
-
-  // local pagination for demo — slice rows
-  const start = (page - 1) * pageSize;
-  const visibleRows = rows.slice(start, start + pageSize);
+export default function ListCampaignTable({ headings, rows }) {
+  const routePage = useRouter();
 
   return (
-    <YStack gap="$3" padding="$3" width="100%">
-      {/* Top bar */}
-      <XStack alignItems="center" justifyContent="space-between">
-        <Button onPress={() => {console.log("PRINT PRESSESD");
-        }} size="$3" icon={null}>
-          <XStack alignItems="center" gap="$2">
-            <Icon name="🖨️" />
-            <Text>Print</Text>
-          </XStack>
+    <YStack gap="$3" p="$3" bg="white" w="100%">
+      {/* === Top Bar === */}
+      <XStack justifyContent="space-between" alignItems="center" flexWrap="wrap">
+        {/* Left: Print */}
+        <Button
+          size="$3"
+          icon={<Printer size={16} />}
+          bg="$blue10"
+          color="white"
+          borderRadius="$4"
+        >
+          Print
         </Button>
 
-        <XStack alignItems="center" gap="$2">
-          <Input
-            value={query}
-            onChangeText={setQuery}
-            placeholder="Search..."
-            width={160}
-            onKeyPress={(e) => {
-              // optional: trigger on Enter (web) — onPress for mobile search button
-            }}
-          />
-          <Button onPress={() => {console.log("Search pressed")} } size="$3">
-            <Text>Search</Text>
-          </Button>
-
-          <Button onPress={()=> {console.log("Add new wbtn pressed");
-          }} size="$3">
-            <XStack alignItems="center" gap="$2">
-              <Icon name="＋" />
-              <Text>Add New</Text>
-            </XStack>
+        {/* Right: Search + Add */}
+        <XStack gap="$2" alignItems="center" mt="$2">
+          <Input placeholder="Search..." w={160} size="$3" />
+          <Button
+            size="$3"
+            icon={<Plus size={16} />}
+            bg="$green10"
+            color="white"
+            borderRadius="$4"
+            onPress={() => routePage.push("/(tabs)/campaigns/createCampaigns")}
+          >
+            Add New
           </Button>
         </XStack>
       </XStack>
 
-      {/* Table heading row */}
-      <YStack>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      {/* === Unified Horizontal + Vertical Scroll === */}
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ minWidth: 820 }}
+      >
+        <YStack flexShrink={0}>
+          {/* === Table Header === */}
           <XStack
-            width={800} // make wide so horizontal scroll shows on small screens
-            paddingVertical="$2"
+            bg="$gray2"
+            py="$3"
+            px="$2"
             borderBottomWidth={1}
-            borderColor="#e6e6e6"
-            alignItems="center"
+            borderColor="#eaeaea"
           >
             {headings.map((h) => (
               <XStack
                 key={h.key}
-                minWidth={h.key === "campaignDescription" ? 240 : 140}
-                paddingHorizontal="$3"
+                width={
+                  h.key === "campaignDescription"
+                    ? 260
+                    : h.key === "campaignName"
+                    ? 180
+                    : 160
+                }
+                justifyContent="center"
                 alignItems="center"
+                flexShrink={0}
               >
-                <TouchableOpacity onPress={() => { /* placeholder for sort */ }}>
-                  <Text fontWeight="700">{h.label}</Text>
-                </TouchableOpacity>
+                <Text fontWeight="700" fontSize="$4" textAlign="center">
+                  {h.label}
+                </Text>
               </XStack>
             ))}
           </XStack>
-        </ScrollView>
 
-        {/* Table body — both vertical and horizontal scrollable */}
-        <ScrollView style={{ maxHeight: 420 }} showsVerticalScrollIndicator>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <YStack>
-              {visibleRows.map((row) => (
+          {/* === Scrollable Table Body === */}
+          <ScrollView style={{ maxHeight: 420 }} showsVerticalScrollIndicator>
+            {rows.map((row, index) => (
+              <XStack
+                key={row.id || index}
+                py="$3"
+                px="$2"
+                borderBottomWidth={1}
+                borderColor="#f0f0f0"
+                alignItems="center"
+                justifyContent="flex-start"
+              >
+                {/* Campaign Name */}
                 <XStack
-                  key={row.id}
-                  width={800}
-                  paddingVertical="$3"
-                  borderBottomWidth={1}
-                  borderColor="#f0f0f0"
+                  width={180}
+                  justifyContent="center"
                   alignItems="center"
+                  px="$3"
+                  flexShrink={0}
                 >
-                  {/* render cells in same order as headings */}
-                  <XStack minWidth={140} paddingHorizontal="$3">
-                    <Text numberOfLines={1} ellipsizeMode="tail">
-                      {row.campaignName}
-                    </Text>
-                  </XStack>
-
-                  <XStack minWidth={240} paddingHorizontal="$3">
-                    <Text numberOfLines={2} ellipsizeMode="tail">
-                      {row.campaignDescription}
-                    </Text>
-                  </XStack>
-
-                  <XStack minWidth={140} paddingHorizontal="$3">
-                    <Text numberOfLines={1}>{row.dates}</Text>
-                  </XStack>
-
-                  <XStack minWidth={120} paddingHorizontal="$3" alignItems="center">
-                    <TouchableOpacity onPress={() => {console.log("Add Post button pressed")}}>
-                      <XStack alignItems="center" gap="$2" padding="$2">
-                        <Icon name="＋" />
-                        <Text>{row.postsCount ?? 0}</Text>
-                      </XStack>
-                    </TouchableOpacity>
-                  </XStack>
-
-                  <XStack minWidth={140} paddingHorizontal="$3" gap="$2">
-                    <Button onPress={() => {/* create/edit handler */}} size="$3">
-                      <Icon name="✏️" />
-                    </Button>
-                    <Button onPress={() => {console.log("Search pressed")}} size="$3" >
-                      <Icon name="🗑️" />
-                    </Button>
-                  </XStack>
+                  <Text
+                    textAlign="center"
+                    flexWrap="wrap"
+                    width="100%"
+                    flex={1}
+                  >
+                    {row.campaignName}
+                  </Text>
                 </XStack>
-              ))}
-            </YStack>
-          </ScrollView>
-        </ScrollView>
-      </YStack>
 
-      {/* Pagination (simple compact UI) */}
-      <XStack justifyContent="flex-end" gap="$2" alignItems="center">
-        <Button onPress={() => {console.log("Previous button pressed")}} disabled={page === 1}>
-          <Text>Prev</Text>
-        </Button>
-        <Text>Page {page}{total ? ` of ${Math.ceil(total / pageSize)}` : ""}</Text>
-        <Button onPress={() => {console.log("Next button pressed")}}>
-          <Text>Next</Text>
-        </Button>
-      </XStack>
+                {/* Campaign Description */}
+                <XStack
+                  width={260}
+                  justifyContent="center"
+                  alignItems="center"
+                  px="$3"
+                  flexShrink={0}
+                >
+                  <Text
+                    textAlign="center"
+                    flexWrap="wrap"
+                    width="100%"
+                    flex={1}
+                    style={{ flexShrink: 1 }}
+                  >
+                    {row.campaignDescription}
+                  </Text>
+                </XStack>
+
+                {/* Dates */}
+                <XStack
+                  width={160}
+                  justifyContent="center"
+                  alignItems="center"
+                  px="$3"
+                  flexShrink={0}
+                >
+                  <Text textAlign="center">{row.dates}</Text>
+                </XStack>
+
+                {/* Posts */}
+                <XStack
+                  width={140}
+                  justifyContent="center"
+                  alignItems="center"
+                  px="$3"
+                  flexShrink={0}
+                  gap="$2"
+                >
+                  <Plus size={14} />
+                  <Text textAlign="center">{row.postsCount ?? 0}</Text>
+                </XStack>
+
+                {/* Actions */}
+                <XStack
+                  width={140}
+                  justifyContent="center"
+                  alignItems="center"
+                  px="$3"
+                  flexShrink={0}
+                  gap="$3"
+                >
+                  <TouchableOpacity>
+                    <Edit3 size={16} color="gray" />
+                  </TouchableOpacity>
+                  <TouchableOpacity>
+                    <Trash2 size={16} color="tomato" />
+                  </TouchableOpacity>
+                </XStack>
+              </XStack>
+            ))}
+          </ScrollView>
+        </YStack>
+      </ScrollView>
     </YStack>
   );
 }
