@@ -38,9 +38,9 @@ export default function Campaigns() {
   ];
 
   return (
-    <YStack flex={1} alignItems="center" bg="$background" paddingTop={30}>
+    <YStack flex={1} alignItems="center" bg="$background" paddingTop={20}>
       {/* Header */}
-      <H3 fontWeight="700" mb="$4">
+      <H3 fontWeight="700" mb="$1">
         Campaign list
       </H3>
     
