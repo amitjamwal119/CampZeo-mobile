@@ -1,10 +1,7 @@
-import { H3,YStack } from "tamagui";
-
-
+import { H3, YStack, Theme, ScrollView } from "tamagui";
 import ListCampaignTable from "./campaignComponents/listCampaignTable";
 
 export default function Campaigns() {
-  
   const headings = [
     { key: "campaignName", label: "Campaign Name" },
     { key: "campaignDescription", label: "Campaign Description" },
@@ -38,14 +35,27 @@ export default function Campaigns() {
   ];
 
   return (
-    <YStack flex={1} alignItems="center" bg="$background" paddingTop={20}>
-      {/* Header */}
-      <H3 fontWeight="700" mb="$1">
-        Campaign list
-      </H3>
-    
+    <>
+      <ScrollView>
+        <Theme name="light">
+          <YStack
+            flex={1}
+            alignItems="center"
+            backgroundColor="$background"
+            paddingTop="$3"
+            // paddingHorizontal="$5"
+            gap="$3"
+          >
+            {/* Header */}
+            <H3 fontWeight="700" fontSize="$5" color="$color">
+              Campaign List
+            </H3>
 
-      <ListCampaignTable headings={headings} rows={rows} />
-    </YStack>
+            {/* Table Component */}
+            <ListCampaignTable headings={headings} rows={rows} />
+          </YStack>
+        </Theme>
+      </ScrollView>
+    </>
   );
 }

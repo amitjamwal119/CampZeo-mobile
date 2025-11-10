@@ -7,15 +7,7 @@ import {
   Youtube,
 } from "@tamagui/lucide-icons";
 import { TouchableOpacity } from "react-native";
-import {
-  Button,
-  Form,
-  H3,
-  Input,
-  TextArea,
-  XStack,
-  YStack,
-} from "tamagui";
+import { Button, Form, H1, Input, TextArea, XStack, YStack } from "tamagui";
 
 import { Pinterest, Whatsapp } from "../../utils/icons/icons";
 
@@ -34,16 +26,16 @@ export default function CreateCampaignPost() {
   return (
     <YStack
       flex={1}
-      bg="$background"
+      backgroundColor="$background"
       padding={20}
       justifyContent="flex-start"
       alignItems="center"
     >
       <Form width="90%" maxWidth={500}>
         <YStack gap="$5" alignItems="center">
-          <H3 fontWeight="700" textAlign="center">
+          <H1 fontWeight="700" fontSize={25} textAlign="center">
             Campaign List
-          </H3>
+          </H1>
 
           {/* Social Icons */}
           <XStack flexWrap="wrap" justifyContent="center" gap="$4">
@@ -74,14 +66,14 @@ export default function CreateCampaignPost() {
           {/* Form Fields */}
           <YStack width="100%" gap="$3">
             <Input
-              size="$4"
+              size="$7"
               placeholder="Enter Subject Title to generate with AI"
-              borderRadius="$6"
+              borderRadius="$3"
               width="100%"
             />
             <TextArea
               placeholder="Enter your SMS content here..."
-              borderRadius="$6"
+              borderRadius="$3"
               minHeight={100}
               width="100%"
             />
@@ -89,10 +81,14 @@ export default function CreateCampaignPost() {
             <Button
               theme="blue"
               width="100%"
-              mt="$2"
-              size="$4"
-              borderRadius="$6"
-              color="$blue10"
+              marginTop="$2"
+              size="$7"
+              borderWidth={1}
+              borderRadius="$3"
+              color="$white"
+              fontSize={19}
+              fontWeight={700}
+              backgroundColor="$blue7"
             >
               Create Campaign Post
             </Button>

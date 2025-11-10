@@ -6,16 +6,16 @@ import ChangePassword from "../../tabs-components/profile-details/changePassword
 export default function UserProfile() {
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <YStack f={1} bg="$background" p="$4" ai="center">
+      <YStack flex={1} backgroundColor="$background" padding="$4" alignItems="center">
 
         {/* Profile Header */}
-        <YStack ai="center" gap="$2" mt="$4" mb="$5">
+        <YStack alignItems="center" gap="$2" marginTop="$4" marginBottom="$5">
           <Avatar circular size="$7">
             <Avatar.Image src="https://example.com/profile.jpg" />
             <Avatar.Fallback backgroundColor="$gray6" />
           </Avatar>
 
-          <H3 mt="$2" color="$color12">Amit Jamwal</H3>
+          <H3 marginTop="$2" color="$color12">Amit Jamwal</H3>
           <Paragraph color="$gray10">Software Engineer</Paragraph>
 
           {/* Email Field */}

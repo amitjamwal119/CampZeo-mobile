@@ -1,7 +1,6 @@
-import { Edit3, Plus, Printer, Trash2 } from "@tamagui/lucide-icons";
-import { useRouter } from "expo-router";
 import React from "react";
 import { TouchableOpacity } from "react-native";
+import { useRouter } from "expo-router";
 import {
   YStack,
   XStack,
@@ -12,276 +11,354 @@ import {
   Card,
   useMedia,
   AlertDialog,
-  View,
+  Theme,
+  Separator,
 } from "tamagui";
+import { Edit3, Plus, Printer, Trash2 } from "@tamagui/lucide-icons";
 
+// ----------------------------------------------------
+// ✅ ListCampaignTable Component
+// ----------------------------------------------------
 export default function ListCampaignTable({ headings, rows }) {
   const router = useRouter();
   const media = useMedia();
 
-  // ✅ Action Buttons (common for both views)
+  // ----------------------------------------------------
+  // ✅ Reusable Action Buttons Component
+  // ----------------------------------------------------
   const ActionButtons = ({ onAddPost }) => (
-    <XStack
-      display="flex"
-      w="100%"
-      justifyContent="space-between"
-      alignItems="center"
-    >
-      <XStack>
-        <Button
-          size="$2"
-          backgroundColor="$blue5"
-          borderRadius="$5"
-          onPress={onAddPost}
-          hoverStyle={{ backgroundColor: "$blue6" }}
-          pressStyle={{ scale: 0.96 }}
-          color="#0057D9"
-        >
-          <Plus size={15} color="#0057D9" />
-          Add Post
-        </Button>
-      </XStack>
+    <XStack alignItems="center" justifyContent="space-between" gap="$5">
+      {/* Add Post Button */}
+      <Button
+        size="$4"
+        fontSize="$3"
+        backgroundColor="$blue3"
+        borderRadius="$2"
+        hoverStyle={{ backgroundColor: "$blue5" }}
+        pressStyle={{ scale: 0.96 }}
+        icon={<Plus size={19} color="#0057D9" />}
+        color="#0057D9"
+        onPress={onAddPost}
+      >
+        Add Post
+      </Button>
 
-      <XStack display="flex" gap="$5">
-        {/* Edit campaign details Start*/}
-        <TouchableOpacity activeOpacity={0.6}>
-          <Edit3 size={18} color="gray" />
-        </TouchableOpacity>
-        {/* Edit campaign details End*/}
+      {/* Edit Icon */}
+      <TouchableOpacity activeOpacity={0.7}>
+        <Edit3 size={20} color="$color" />
+      </TouchableOpacity>
 
-        {/* ✅ Delete Campaign Dialog */}
-        <AlertDialog native>
-          <AlertDialog.Trigger asChild>
-            <TouchableOpacity activeOpacity={0.6}>
-              <Trash2 size={18} color="tomato" />
-            </TouchableOpacity>
-          </AlertDialog.Trigger>
+      {/* Delete Dialog */}
+      <AlertDialog native>
+        <AlertDialog.Trigger asChild>
+          <TouchableOpacity activeOpacity={0.7}>
+            <Trash2 size={20} color="tomato" />
+          </TouchableOpacity>
+        </AlertDialog.Trigger>
 
-          <AlertDialog.Portal>
-            <AlertDialog.Overlay
-              key="overlay"
-              animation="quick"
-              opacity={0.5}
-              enterStyle={{ opacity: 0 }}
-              exitStyle={{ opacity: 0 }}
-            />
-            <AlertDialog.Content
-              bordered
-              elevate
-              key="content"
-              animation={[
-                "quick",
-                {
-                  opacity: {
-                    overshootClamping: true,
-                  },
-                },
-              ]}
-              enterStyle={{ x: 0, y: -20, opacity: 0, scale: 0.9 }}
-              exitStyle={{ x: 0, y: 10, opacity: 0, scale: 0.95 }}
-              x={0}
-              scale={1}
-              opacity={1}
-              y={0}
-            >
-              <YStack gap="$4">
-                <AlertDialog.Title>Delete Campaign</AlertDialog.Title>
-                <AlertDialog.Description>
-                  Are you sure you want to delete this campaign?
-                </AlertDialog.Description>
+        <AlertDialog.Portal>
+          <AlertDialog.Overlay
+            animation="quick"
+            opacity={0.5}
+            enterStyle={{ opacity: 0 }}
+            exitStyle={{ opacity: 0 }}
+          />
 
-                <XStack gap="$3" justifyContent="flex-end">
-                  <AlertDialog.Cancel asChild>
-                    <Button>Cancel</Button>
-                  </AlertDialog.Cancel>
-                  <AlertDialog.Action asChild>
-                    <Button>Delete</Button>
-                  </AlertDialog.Action>
-                </XStack>
-              </YStack>
-            </AlertDialog.Content>
-          </AlertDialog.Portal>
-        </AlertDialog>
-      </XStack>
+          <AlertDialog.Content
+            elevate
+            bordered
+            padding="$5"
+            borderRadius="$6"
+            backgroundColor="$background"
+            borderColor="$borderColor"
+            enterStyle={{ y: -20, opacity: 0 }}
+            exitStyle={{ y: 10, opacity: 0 }}
+          >
+            <YStack gap="$4">
+              <AlertDialog.Title fontSize="$3" color="$color">
+                Delete Campaign
+              </AlertDialog.Title>
+
+              <AlertDialog.Description fontSize="$3" color="$color">
+                Are you sure you want to delete this campaign?
+              </AlertDialog.Description>
+
+              <XStack justifyContent="flex-end" gap="$4" marginTop="$3">
+                <AlertDialog.Cancel asChild>
+                  <Button
+                    borderRadius="$4"
+                    backgroundColor="$gray3"
+                    color="$color"
+                  >
+                    Cancel
+                  </Button>
+                </AlertDialog.Cancel>
+
+                <AlertDialog.Action asChild>
+                  <Button
+                    borderRadius="$4"
+                    backgroundColor="tomato"
+                    color="white"
+                  >
+                    Delete
+                  </Button>
+                </AlertDialog.Action>
+              </XStack>
+            </YStack>
+          </AlertDialog.Content>
+        </AlertDialog.Portal>
+      </AlertDialog>
     </XStack>
   );
 
+  // ----------------------------------------------------
+  // ✅ Main Render
+  // ----------------------------------------------------
   return (
-    <YStack
-      gap="$4"
-      p="$4"
-      bg="white"
-      w="100%"
-      borderRadius="$6"
-      shadowColor="rgba(0,0,0,0.05)"
-      shadowRadius={8}
-    >
-      {/* === Header Bar === */}
-      <YStack w="100%" gap="$3">
-        {/* Top - Print Button */}
-        <Button
-          alignSelf="flex-start"
-          size="$3"
-          icon={<Printer size={16} />}
-          bg="$blue10"
-          color="white"
-          borderRadius="$5"
-          hoverStyle={{ opacity: 0.9 }}
-        >
-          Print
-        </Button>
-
-        {/* Bottom - Search & Add New spaced apart */}
-        <XStack w="100%" justifyContent="space-between" alignItems="center">
-          <Input
-            placeholder="Search..."
-            flex={1}
-            size="$3"
-            borderRadius="$4"
-            mr="$3" // gap between input and button
-          />
-
+    <Theme name="light">
+      <ScrollView></ScrollView>
+      <YStack
+        width="100%"
+        backgroundColor="$background"
+        borderWidth={1}
+        borderColor="$borderColor"
+        shadowColor="rgba(0,0,0,0.05)"
+        shadowRadius={10}
+        padding="$3"
+        gap="$3"
+        borderRadius="$3"
+      >
+        {/* ==============================
+          HEADER BAR
+        =============================== */}
+        <YStack width="100%" gap="$3">
+          {/* Print Button */}
           <Button
-            size="$3"
-            icon={<Plus size={16} />}
-            bg="$green10"
+            alignSelf="flex-start"
+            size="$4"
+            fontSize="$3"
+            backgroundColor="$blue7"
             color="white"
-            borderRadius="$5"
+            borderRadius="$2"
+            icon={<Printer size={18} />}
             hoverStyle={{ opacity: 0.9 }}
-            onPress={() => router.push("/(tabs)/campaigns/createCampaigns")}
           >
-            Add New
+            Print
+          </Button>
+
+          {/* Search & Add New Row */}
+          <XStack alignItems="center" gap="$4" justifyContent="space-between">
+            <Input
+              flex={1}
+              placeholder="Search..."
+              fontSize={16}
+              paddingVertical="$3"
+              paddingHorizontal="$4"
+              borderRadius="$5"
+              borderWidth={1}
+              borderColor="$borderColor"
+              color="$black"
+            />
+
+            <Button
+              size="$4"
+              fontSize="$3"
+              backgroundColor="$green10"
+              color="white"
+              borderRadius="$2"
+              hoverStyle={{ opacity: 0.9 }}
+              icon={<Plus size={18} />}
+              onPress={() => router.push("/(tabs)/campaigns/createCampaigns")}
+            >
+              Add New
+            </Button>
+          </XStack>
+        </YStack>
+
+        {/* ==============================
+          TABLE VIEW (Responsive)
+        =============================== */}
+        {media.gtSm ? (
+          /* 💻 DESKTOP VIEW */
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ minWidth: 900 }}
+          >
+            <YStack flexShrink={0}>
+              {/* === Table Header === */}
+              <XStack
+                backgroundColor="$gray2"
+                paddingVertical="$3"
+                paddingHorizontal="$3"
+                borderBottomWidth={1}
+                borderColor="$borderColor"
+              >
+                {headings.map(({ key, label }) => (
+                  <XStack
+                    key={key}
+                    width={
+                      key === "campaignDescription"
+                        ? 280
+                        : key === "campaignName"
+                        ? 200
+                        : 180
+                    }
+                    justifyContent="center"
+                    alignItems="center"
+                    paddingHorizontal="$3"
+                  >
+                    <Text fontWeight="700" fontSize="$5" color="$color">
+                      {label}
+                    </Text>
+                  </XStack>
+                ))}
+                <XStack width={200} justifyContent="center">
+                  <Text fontWeight="700" fontSize="$5" color="$color">
+                    Actions
+                  </Text>
+                </XStack>
+              </XStack>
+
+              {/* === Table Body === */}
+              <ScrollView style={{ maxHeight: 460 }}>
+                {rows.map((row, i) => (
+                  <XStack
+                    key={row.id || i}
+                    paddingVertical="$4"
+                    paddingHorizontal="$3"
+                    alignItems="center"
+                    borderBottomWidth={1}
+                    borderColor="$borderColor"
+                    hoverStyle={{ backgroundColor: "$gray1" }}
+                  >
+                    <XStack width={200} justifyContent="center">
+                      <Text textAlign="center" color="$color" fontSize="$4">
+                        {row.campaignName}
+                      </Text>
+                    </XStack>
+
+                    <XStack
+                      width={280}
+                      justifyContent="center"
+                      paddingHorizontal="$3"
+                    >
+                      <Text
+                        textAlign="center"
+                        numberOfLines={2}
+                        color="$color"
+                        fontSize="$4"
+                      >
+                        {row.campaignDescription}
+                      </Text>
+                    </XStack>
+
+                    <XStack width={180} justifyContent="center">
+                      <Text textAlign="center" color="$color" fontSize="$4">
+                        {row.dates}
+                      </Text>
+                    </XStack>
+
+                    <XStack width={200} justifyContent="center">
+                      <ActionButtons
+                        onAddPost={() =>
+                          router.push("/(tabs)/campaigns/createCPost")
+                        }
+                      />
+                    </XStack>
+                  </XStack>
+                ))}
+              </ScrollView>
+            </YStack>
+          </ScrollView>
+        ) : (
+          /* 📱 MOBILE VIEW */
+          <ScrollView
+            nestedScrollEnabled
+            showsVerticalScrollIndicator
+            style={{ maxHeight: 520 }}
+            contentContainerStyle={{ paddingBottom: 20 }}
+          >
+            <YStack gap="$4">
+              {rows.map((row, i) => (
+                <Card
+                  key={i}
+                  padding="$3"
+                  borderWidth={1}
+                  borderColor="$borderColor"
+                  borderRadius="$3"
+                  backgroundColor="$white"
+                  hoverStyle={{ backgroundColor: "$gray1" }}
+                  shadowColor="rgba(0,0,0,0.05)"
+                  shadowRadius={6}
+                >
+                  <YStack gap="$3">
+                    <Text fontWeight="700" color="$color" fontSize="$4">
+                      {row.campaignName}
+                    </Text>
+
+                    <Text
+                      color="$color"
+                      fontWeight="500"
+                      opacity={0.85}
+                      fontSize="$3"
+                    >
+                      {row.campaignDescription}
+                    </Text>
+
+                    <Text fontSize="$3" color="$color" opacity={0.7}>
+                      Date Range: {row.dates}
+                    </Text>
+
+                    <Separator marginVertical="$1" />
+
+                    <XStack justifyContent="space-between" alignItems="center">
+                      <ActionButtons
+                        onAddPost={() =>
+                          router.push("/(tabs)/campaigns/createCPost")
+                        }
+                      />
+                    </XStack>
+                  </YStack>
+                </Card>
+              ))}
+            </YStack>
+          </ScrollView>
+        )}
+
+        {/* ==============================
+          📄 Dummy Pagination Section
+        =============================== */}
+        <XStack
+          justifyContent="center"
+          alignItems="center"
+          gap="$3"
+          paddingVertical="$3"
+          borderTopWidth={1}
+          borderColor="$borderColor"
+        >
+          <Button size="$3" backgroundColor="$blue6" borderRadius="$2" disabled>
+            <Text color="white">Prev</Text>
+          </Button>
+
+          {[1, 2, 3].map((num) => (
+            <Button
+              key={num}
+              size="$3"
+              backgroundColor={num === 1 ? "$blue7" : "$white"}
+              borderWidth={1}
+              borderColor="$borderColor"
+              borderRadius="$2"
+            >
+              <Text color={num === 1 ? "white" : "$color"}>{num}</Text>
+            </Button>
+          ))}
+
+          <Button size="$3" backgroundColor="$blue6" borderRadius="$2">
+            <Text color="white">Next</Text>
           </Button>
         </XStack>
       </YStack>
-
-      {/* === Responsive Layout === */}
-      {media.gtSm ? (
-        /* 💻 DESKTOP VIEW */
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ minWidth: 820 }}
-        >
-          <YStack flexShrink={0}>
-            {/* === Table Header === */}
-            <XStack
-              bg="$gray2"
-              py="$3"
-              px="$2"
-              borderBottomWidth={1}
-              borderColor="#eaeaea"
-            >
-              {headings.map(({ key, label }) => (
-                <XStack
-                  key={key}
-                  width={
-                    key === "campaignDescription"
-                      ? 260
-                      : key === "campaignName"
-                      ? 180
-                      : 160
-                  }
-                  justifyContent="center"
-                  alignItems="center"
-                  px="$2"
-                >
-                  <Text fontWeight="700" fontSize="$4" color="$gray11">
-                    {label}
-                  </Text>
-                </XStack>
-              ))}
-              <XStack width={200} justifyContent="center">
-                <Text fontWeight="700" fontSize="$4" color="$gray11">
-                  Actions
-                </Text>
-              </XStack>
-            </XStack>
-
-            {/* === Table Body === */}
-            <ScrollView style={{ maxHeight: 420 }}>
-              {rows.map((row, i) => (
-                <XStack
-                  key={row.id || i}
-                  py="$3"
-                  px="$2"
-                  borderBottomWidth={1}
-                  borderColor="#f0f0f0"
-                  alignItems="center"
-                  hoverStyle={{
-                    backgroundColor: "$gray1",
-                  }}
-                >
-                  <XStack width={180} justifyContent="center">
-                    <Text textAlign="center">{row.campaignName}</Text>
-                  </XStack>
-
-                  <XStack width={260} justifyContent="center" px="$2">
-                    <Text textAlign="center" numberOfLines={2}>
-                      {row.campaignDescription}
-                    </Text>
-                  </XStack>
-
-                  <XStack width={160} justifyContent="center">
-                    <Text textAlign="center">{row.dates}</Text>
-                  </XStack>
-
-                  <XStack width={200} justifyContent="center">
-                    <ActionButtons
-                      onAddPost={() =>
-                        router.push("/(tabs)/campaigns/createCPost")
-                      }
-                    />
-                  </XStack>
-                </XStack>
-              ))}
-            </ScrollView>
-          </YStack>
-        </ScrollView>
-      ) : (
-        /* 📱 MOBILE VIEW */
-        <ScrollView
-          nestedScrollEnabled
-          showsVerticalScrollIndicator
-          style={{ maxHeight: 500 }}
-          contentContainerStyle={{ paddingBottom: 20 }}
-        >
-          <YStack gap="$3">
-            {rows.map((row, i) => (
-              <Card
-                key={i}
-                p="$4"
-                borderWidth={1}
-                borderColor="#e0e0e0"
-                borderRadius="$6"
-                hoverStyle={{ backgroundColor: "$gray1" }}
-              >
-                <YStack gap="$2">
-                  <Text fontWeight="700" color="$gray12">
-                    {row.campaignName}
-                  </Text>
-                  <Text color="$gray10">{row.campaignDescription}</Text>
-                  <Text fontSize="$2" color="$gray9">
-                    Date Range: {row.dates}
-                  </Text>
-
-                  <XStack
-                    justifyContent="space-between"
-                    alignItems="center"
-                    mt="$2"
-                  >
-                    <ActionButtons
-                      onAddPost={() =>
-                        router.push("/(tabs)/campaigns/createCPost")
-                      }
-                    />
-                  </XStack>
-                </YStack>
-              </Card>
-            ))}
-          </YStack>
-        </ScrollView>
-      )}
-    </YStack>
+    </Theme>
   );
 }

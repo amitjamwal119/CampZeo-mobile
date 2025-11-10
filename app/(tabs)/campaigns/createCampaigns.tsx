@@ -9,21 +9,14 @@ import {
   Paragraph,
   Card,
 } from "tamagui";
-//   XStack,  View,
-
 import RangeCalendar from "../../../tabs-components/campaign-details/RangeCalendar";
 import { useRouter } from "expo-router";
 
 export default function CreateCampaigns() {
-
-    const routePage = useRouter();
-
+  const routePage = useRouter();
 
   // Calendar Logic
-  const [selectedDates, setSelectedDates] = useState<{
-    start: string;
-    end: string;
-  }>({
+  const [selectedDates, setSelectedDates] = useState({
     start: "",
     end: "",
   });
@@ -38,11 +31,11 @@ export default function CreateCampaigns() {
       flex={1}
       alignItems="center"
       justifyContent="center"
-      bg="$background"
-      padding=""
+      backgroundColor="$background"
+      padding="$5" // ✅ valid token
     >
       {/* Header */}
-      <H3 fontWeight="700" mb="$4">
+      <H3 fontWeight="700" marginBottom="$4" color="$color">
         Create Campaign
       </H3>
 
@@ -53,8 +46,8 @@ export default function CreateCampaigns() {
         width="90%"
         maxWidth={450}
         padding="$4"
-        borderRadius="$6"
-        backgroundColor="$color2"
+        borderRadius="$5"
+        backgroundColor="$white" // ✅ valid token
         shadowColor="rgba(0,0,0,0.1)"
         shadowRadius={10}
       >
@@ -67,52 +60,65 @@ export default function CreateCampaigns() {
         >
           {/* Campaign Name */}
           <YStack width="100%" gap="$2">
-            <Paragraph fontWeight="600">Campaign Name</Paragraph>
+            <Paragraph fontWeight="600" color="$color">
+              Campaign Name
+            </Paragraph>
             <Input
               size="$4"
               placeholder="Enter campaign name"
               borderRadius="$4"
               width="100%"
+              fontSize={16} // ✅ numeric value
             />
           </YStack>
 
           {/* Date Range Picker */}
           <YStack width="100%" gap="$2">
-            <Paragraph fontWeight="600">Select Date Range</Paragraph>
+            <Paragraph fontWeight="600" color="$color">
+              Select Date Range
+            </Paragraph>
             <RangeCalendar onRangeSelect={handleRangeSelect} />
-            {selectedDates.start && selectedDates.end ? (
+
+            {selectedDates.start && selectedDates.end && (
               <Paragraph
-                fontSize="$2"
-                color="$gray10"
+                fontSize={14} // ✅ numeric
+                color="$color"
                 textAlign="center"
-                mt="$1"
+                marginTop="$2"
               >
-                {`From ${selectedDates.start} to ${selectedDates.end}`}
+                From {selectedDates.start} to {selectedDates.end}
               </Paragraph>
-            ) : null}
+            )}
           </YStack>
 
           {/* Description */}
           <YStack width="100%" gap="$2">
-            <Paragraph fontWeight="600">Description</Paragraph>
+            <Paragraph fontWeight="600" color="$color">
+              Description
+            </Paragraph>
             <TextArea
               placeholder="Enter campaign details"
               borderRadius="$4"
               minHeight={100}
               width="100%"
+              fontSize={16} // ✅ numeric
             />
           </YStack>
 
           {/* Submit Button */}
           <Button
-            theme="blue"
             width="100%"
-            mt="$3"
+            marginTop="$3"
             size="$4"
+            backgroundColor="$blue6"
+            color="blue10"
             borderRadius="$4"
+            hoverStyle={{ backgroundColor: "$blue7" }}
             onPress={() => routePage.push("/(tabs)/campaigns/campaignsDetails")}
           >
-            Create Campaign
+            <Paragraph color="white" fontWeight="600">
+              Create Campaign
+            </Paragraph>
           </Button>
         </Form>
       </Card>

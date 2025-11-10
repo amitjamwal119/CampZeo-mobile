@@ -4,25 +4,8 @@ import { YStack } from 'tamagui';
 import BottomBar from '../common/bottomBar';
 import TopBar from '../common/topBar';
 
-import * as Notifications from 'expo-notifications';
-import { useEffect } from 'react';
-
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-    shouldShowBanner: true,
-    shouldShowList: true,
-  }),
-});
-
 
 export default function TabsLayout() {
-  useEffect(() => {
-    (async () => {
-      await Notifications.requestPermissionsAsync();
-    })();
-  }, []);
 
   return (
     <>

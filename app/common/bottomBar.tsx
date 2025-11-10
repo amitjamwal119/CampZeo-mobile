@@ -16,7 +16,7 @@ export default function BottomBar({ state, descriptors, navigation }: any) {
       paddingBottom={insets.bottom || 12}
       justifyContent="space-around"
       // paddingHorizontal="$2"
-      paddingVertical="$5"
+      paddingVertical="$3"
     >
       {state.routes
         .filter((route: any) => !hiddenRoutes.includes(route.name)) // 👈 filter out unwanted tabs
