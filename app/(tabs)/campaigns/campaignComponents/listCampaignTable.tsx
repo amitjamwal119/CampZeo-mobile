@@ -23,6 +23,7 @@ export default function ListCampaignTable({ headings, rows }) {
   const router = useRouter();
   const media = useMedia();
 
+
   // ----------------------------------------------------
   // ✅ Reusable Action Buttons Component
   // ----------------------------------------------------
@@ -44,7 +45,7 @@ export default function ListCampaignTable({ headings, rows }) {
       </Button>
 
       {/* Edit Icon */}
-      <TouchableOpacity activeOpacity={0.7}>
+      <TouchableOpacity activeOpacity={0.7} onPress={() => {router.push("/(tabs)/campaigns/createCPost")}}>
         <Edit3 size={20} color="$color" />
       </TouchableOpacity>
 
@@ -116,7 +117,7 @@ export default function ListCampaignTable({ headings, rows }) {
   // ----------------------------------------------------
   return (
     <Theme name="light">
-      <ScrollView></ScrollView>
+      {/* <ScrollView></ScrollView> */}
       <YStack
         width="100%"
         backgroundColor="$background"
@@ -168,7 +169,7 @@ export default function ListCampaignTable({ headings, rows }) {
               borderRadius="$2"
               hoverStyle={{ opacity: 0.9 }}
               icon={<Plus size={18} />}
-              onPress={() => router.push("/(tabs)/campaigns/createCampaigns")}
+              onPress={() => router.push("/(tabs)/campaigns/campaignsDetails")}
             >
               Add New
             </Button>
@@ -262,7 +263,7 @@ export default function ListCampaignTable({ headings, rows }) {
                     <XStack width={200} justifyContent="center">
                       <ActionButtons
                         onAddPost={() =>
-                          router.push("/(tabs)/campaigns/createCPost")
+                          router.push("/(tabs)/campaigns/campaignsDetails")
                         }
                       />
                     </XStack>
@@ -314,9 +315,7 @@ export default function ListCampaignTable({ headings, rows }) {
 
                     <XStack justifyContent="space-between" alignItems="center">
                       <ActionButtons
-                        onAddPost={() =>
-                          router.push("/(tabs)/campaigns/createCPost")
-                        }
+                        onAddPost={() =>router.push("/(tabs)/campaigns/campaignsDetails")}
                       />
                     </XStack>
                   </YStack>

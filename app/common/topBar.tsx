@@ -1,10 +1,24 @@
-import { XStack, Popover, Paragraph, Avatar, Theme } from "tamagui";
+import {
+  XStack,
+  Popover,
+  Paragraph,
+  Avatar,
+  Theme,
+  H3,
+  Text,
+  YStack,
+} from "tamagui";
 // , Separator, Text
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
-// import { useState } from "react";
+import { FileSymlink } from "@tamagui/lucide-icons";
+import { useRouter } from "expo-router";
+/// import { useState } from "react";
 
 export default function TopBar() {
+
+  const routePage = useRouter();
+
   // const [notification, setNotification] = useState(false);
 
   return (
@@ -41,7 +55,11 @@ export default function TopBar() {
           <Popover size="$5">
             <Popover.Trigger asChild>
               <TouchableOpacity activeOpacity={0.7}>
-                <Ionicons name="notifications-outline" size={24} color="#007AFF" />
+                <Ionicons
+                  name="notifications-outline"
+                  size={24}
+                  color="#007AFF"
+                />
               </TouchableOpacity>
             </Popover.Trigger>
 
@@ -68,13 +86,52 @@ export default function TopBar() {
           {/* Divider between icons */}
           {/* <Separator vertical marginHorizontal="$1" /> */}
 
-          {/* Layers Icon */}
-          <TouchableOpacity activeOpacity={0.7}>
-            <Ionicons name="layers-outline" size={24} color="#007AFF" />
-          </TouchableOpacity>
+          {/* Quick Actions Popover */}
+          <Popover size="$5">
+            <Popover.Trigger asChild>
+              <TouchableOpacity activeOpacity={0.7}>
+                <Ionicons name="layers-outline" size={24} color="#007AFF" />
+              </TouchableOpacity>
+            </Popover.Trigger>
+
+            <Popover.Content
+              elevate
+              padding="$4"
+              zIndex={1000}
+              borderWidth={1}
+              borderColor="$borderColor"
+              backgroundColor="$background"
+              enterStyle={{ y: -10, opacity: 0 }}
+              exitStyle={{ y: -10, opacity: 0 }}
+              animation="quick"
+              borderRadius="$3"
+              shadowOpacity={0.15}
+            >
+              {/* <Paragraph size="$3" color="$color" maxWidth={180}>
+                You have no new notifications.
+              </Paragraph> */}
+              <H3
+                textAlign="center"
+                marginBottom="$3"
+                fontSize={15}
+                fontWeight="700"
+              >
+                Quick Action
+              </H3>
+
+              <TouchableOpacity onPress={() => {routePage.push("/(invoice)/invoice")}}>
+                <YStack gap="$1" justifyContent="center" alignItems="center">
+                  <FileSymlink color="$blue7" />
+                  <Text color="$blue7">Invoice</Text>
+                </YStack>
+              </TouchableOpacity>
+
+              <Popover.Arrow borderWidth={1} borderColor="$borderColor" />
+            </Popover.Content>
+          </Popover>
 
           {/* Avatar */}
-          <TouchableOpacity activeOpacity={0.7}>
+          <TouchableOpacity activeOpacity={0.7} onPress={() => {routePage.push("/(profile)/userProfile")}}>
             <Avatar circular size="$5">
               <Avatar.Image
                 accessibilityLabel="User Avatar"

@@ -1,74 +1,124 @@
 import {
-    Button,
-    Dialog,
-    Form,
-    YStack,
-    Input,
-    Label, H5
-} from 'tamagui';
-
+  Button,
+  Dialog,
+  Form,
+  YStack,
+  Input,
+  Label,
+  H5,
+  Theme,
+  H3,
+} from "tamagui";
 
 export default function EditProfile() {
-    return (
-        <Dialog modal>
-            <Dialog.Trigger asChild>
-                <Button>Edit Profile</Button>
-            </Dialog.Trigger>
+  return (
+    <Theme name="light">
+      <Dialog modal>
+        {/* Trigger Button */}
+        <Dialog.Trigger asChild>
+          <Button
+            size="$4"
+            fontWeight="600"
+            backgroundColor="$blue7"
+            color="white"
+            borderRadius="$4"
+            hoverStyle={{ opacity: 0.9 }}
+          >
+            Edit Profile
+          </Button>
+        </Dialog.Trigger>
 
-            <Dialog.Portal>
-                <Dialog.Overlay
-                    key="overlay"
-                    animation="fast"
-                    enterStyle={{ opacity: 0 }}
-                    exitStyle={{ opacity: 0 }}
-                    backgroundColor="$shadow6"
-                />
+        {/* Dialog Portal */}
+        <Dialog.Portal>
+          {/* Overlay */}
+          <Dialog.Overlay
+            key="overlay"
+            animation="fast"
+            enterStyle={{ opacity: 0 }}
+            exitStyle={{ opacity: 0 }}
+            backgroundColor="rgba(0,0,0,0.4)"
+          />
 
-                <Dialog.Content
-                    key="content"
-                    bordered
-                    elevate
-                    padding="$4"
-                    borderRadius="$6"
-                    gap="$3"
-                    animation="fast"
-                    enterStyle={{ y: 10, opacity: 0 }}
-                    exitStyle={{ y: 10, opacity: 0 }}
+          {/* Dialog Content */}
+          <Dialog.Content
+            key="content"
+            elevate
+            bordered
+            backgroundColor="$light.background"
+            borderColor="$light.borderColor"
+            padding="$5"
+            borderRadius="$5"
+            width="90%"
+            maxWidth={400}
+            alignSelf="center"
+            gap="$3"
+            animation="fast"
+            enterStyle={{ scale: 0.9, opacity: 0 }}
+            exitStyle={{ scale: 0.95, opacity: 0 }}
+          >
+            <Dialog.Title textAlign="center">
+              <H3 color="$light.color" fontSize={30} textAlign="center">
+                Edit Profile
+              </H3>
+            </Dialog.Title>
+
+            {/* Form */}
+            <Form onSubmit={() => console.log("Save changes")}>
+              <YStack gap="$3" marginTop="$3">
+                <YStack gap="$2">
+                  <Label color="$light.color">First Name</Label>
+                  <Input
+                    size="$7"
+                    placeholder="Enter first name"
+                    backgroundColor="$light.muted"
+                    borderColor="$light.borderColor"
+                    // color="$light.color"
+                    borderRadius="$1"
+                  />
+                </YStack>
+
+                <YStack gap="$2">
+                  <Label color="$light.color">Last Name</Label>
+                  <Input
+                    size="$7"
+                    placeholder="Enter last name"
+                    backgroundColor="$light.muted"
+                    borderColor="$light.borderColor"
+                    color="$light.color"
+                    borderRadius="$1"
+                  />
+                </YStack>
+
+                <YStack gap="$2">
+                  <Label color="$light.color">Phone</Label>
+                  <Input
+                    size="$7"
+                    placeholder="Enter phone number"
+                    keyboardType="phone-pad"
+                    backgroundColor="$light.muted"
+                    borderColor="$light.borderColor"
+                    color="$light.color"
+                    borderRadius="$1"
+                  />
+                </YStack>
+
+                <Button
+                  //   marginTop="$3"
+                  size="$7"
+                  color="$white"
+                  fontSize={19}
+                  fontWeight={700}
+                  backgroundColor="$green7"
+                  borderRadius="$4"
+                  hoverStyle={{ opacity: 0.9 }}
                 >
-                    <Dialog.Title style={{ textAlign: "center" }}><H5>Edit Profile</H5></Dialog.Title>
-                    {/* <Dialog.Description>
-                        This is a basic dialog box using Tamagui.
-                    </Dialog.Description>
-
-                    <Paragraph>
-                        You can put any content here — text, buttons, forms, etc.
-                    </Paragraph> */}
-
-                    <Form onSubmit={() => console.log('Save changes')}>
-                        <YStack gap="$3" mt="$3">
-                            <YStack>
-                                <Label>First Name</Label>
-                                <Input placeholder="Enter first name" />
-                            </YStack>
-
-                            <YStack>
-                                <Label>Last Name</Label>
-                                <Input placeholder="Enter last name" />
-                            </YStack>
-
-                            <YStack>
-                                <Label>Phone</Label>
-                                <Input placeholder="Enter phone number" keyboardType="phone-pad" />
-                            </YStack>
-
-                            <Button mt="$2" theme="blue">
-                                Save Changes
-                            </Button>
-                        </YStack>
-                    </Form>
-
-                </Dialog.Content>
-            </Dialog.Portal>
-        </Dialog>
-    )
+                  Save Changes
+                </Button>
+              </YStack>
+            </Form>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog>
+    </Theme>
+  );
 }
