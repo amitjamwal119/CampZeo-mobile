@@ -79,6 +79,7 @@ export default function UserProfile() {
             <EditProfile />
             
             <ChangePassword />
+  
           </View>
         </YStack>
       </ScrollView>

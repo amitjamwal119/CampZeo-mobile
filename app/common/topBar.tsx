@@ -19,8 +19,6 @@ export default function TopBar() {
 
   const routePage = useRouter();
 
-  // const [notification, setNotification] = useState(false);
-
   return (
     <Theme name="light">
       <XStack

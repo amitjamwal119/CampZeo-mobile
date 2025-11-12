@@ -9,9 +9,9 @@ export default function ChangePassword() {
           <Button
             size="$4"
             fontWeight="600"
-            backgroundColor="$blue7"
-            color="white"
-            borderRadius="$4"
+            backgroundColor="$blue3"
+            color="$blue9"
+            borderRadius="$2"
             hoverStyle={{ opacity: 0.9 }}
           >
             Change Password

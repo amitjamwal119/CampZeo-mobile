@@ -1,10 +1,9 @@
-import { Text } from "tamagui";
-
+import CreateContactsForm from "../../tabs-components/contacts-components/createContactsForm";
 
 export default function Contacts() {
   return (
-    <Text>Contacts Screen</Text>
+   <>
+   <CreateContactsForm/>
+   </>
   );
 }
-
-

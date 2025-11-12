@@ -1,26 +1,25 @@
 import { useRouter } from 'expo-router';
-import { YStack, Text, Button } from 'tamagui';
+import { TouchableOpacity } from 'react-native';
+import { H1, ScrollView, Text, YStack } from 'tamagui';
 
-export default function Home() {
+
+
+
+export default function Dashboard() {
+
   const routePage = useRouter();
-
   return (
-    <YStack flex={1} ai="center" jc="center">
-      <Text>🏠 Home Screen</Text>
-      <Text style={{}}>Hello welcome to home screen.</Text>
-      <Button
-        onPress={() => {
-          routePage.push("/(tabs)/profile");
-        }}
-        size="$4"
-        variant="outlined"
-        theme="blue"
-        borderRadius="$10"
-        paddingHorizontal="$4"
-        pressStyle={{ scale: 0.98 }}
-      >
-        Profile Page
-      </Button>
+  <>
+  <ScrollView>
+    <YStack>
+          <H1 textAlign='center' fontWeight={700} fontSize={30}>Dashboard</H1>
+
+      <TouchableOpacity  onPress={() => {routePage.push("/(auth)/auth")}} >
+        {/**/}
+        <Text>Go to auth page</Text>
+      </TouchableOpacity>
     </YStack>
+  </ScrollView>
+  </>
   )
 }
